@@ -142,6 +142,4 @@ public class ThreeFragment extends Fragment{
         return super.onOptionsItemSelected(item);
     }
 
-
-
 }
