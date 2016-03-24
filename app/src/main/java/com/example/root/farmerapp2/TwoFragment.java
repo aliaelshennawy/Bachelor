@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,6 +43,7 @@ public class TwoFragment extends Fragment {
     private RelativeLayout Rlayout;
     private FragmentActivity faActivity;
     private ImageView ivImage = null;
+    private ImageView imgPLay = null;
     public TwoFragment() {
         // Required empty public constructor
     }
@@ -56,6 +56,15 @@ public class TwoFragment extends Fragment {
         File newdir = new File(dir);
         faActivity  = (FragmentActivity)    super.getActivity();
         Rlayout    = (RelativeLayout)    inflater.inflate(R.layout.fragment_two, container, false);
+        imgPLay=(ImageView)Rlayout.findViewById(R.id.playImg);
+        imgPLay.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.guitar);
+                if(mp != null){
+                    mp.start();
+                }
+
+            }   });
 
         ivImage = (ImageView) Rlayout.findViewById(R.id.CameraImg);
         ivImage.setOnClickListener(new View.OnClickListener() {
@@ -65,13 +74,11 @@ public class TwoFragment extends Fragment {
                 // picture taken by camera will be stored as 1.jpg,2.jpg
                 // and likewise.
                 count++;
-                String file = dir+count+".jpg";
+                String file = dir + count + ".jpg";
                 File newfile = new File(file);
                 try {
                     newfile.createNewFile();
-                }
-                catch (IOException e)
-                {
+                } catch (IOException e) {
                 }
 
                 Uri outputFileUri = Uri.fromFile(newfile);
@@ -83,12 +90,14 @@ public class TwoFragment extends Fragment {
             }
         });
         newdir.mkdirs();
+
         return Rlayout;
     }
 
 
         // Here, we are making a folder named picFolder to store
         // pics taken by the camera using this application.
+
 
 
 
