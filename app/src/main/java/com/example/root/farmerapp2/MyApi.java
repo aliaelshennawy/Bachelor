@@ -1,4 +1,6 @@
 package com.example.root.farmerapp2;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 
@@ -14,6 +16,7 @@ import retrofit.Callback;
 /**
  * Created by root on 17/03/16.
  */
+class AccessToken { @SerializedName("access_token") private String accessToken; }
 
 public interface MyApi {
     @FormUrlEncoded
