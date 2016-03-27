@@ -7,6 +7,7 @@ import java.util.List;
 import models.User;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 
@@ -22,6 +23,9 @@ public interface MyApi {
     @FormUrlEncoded
     @POST("/login")
     void Login(@Field("session[name]") String name , @Field("session[password]")String password, Callback<User> callback);
+    @FormUrlEncoded
+    @POST("/users/")
+    void SignUp(@Field("user[name]") String name , @Field("user[password]")String password,@Field("user[password_confirmation]")String password_confirmation, Callback<User> callback);
 
 
 

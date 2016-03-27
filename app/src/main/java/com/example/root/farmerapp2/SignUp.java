@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import models.User;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -15,35 +17,36 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by root on 17/03/16.
+ * Created by root on 26/03/16.
  */
-public class Login  extends Activity {
+public class SignUp extends Activity{
 
-    EditText phone;
-    EditText name;
+EditText phoneSignup;
+EditText nameSignup;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.signup);
 
-        name = (EditText) findViewById(R.id.editName);;
-      phone = (EditText) findViewById(R.id.editPhone);
-;
-    Button loginB = (Button) findViewById(R.id.submit_login);
-        loginB.setOnClickListener(new View.OnClickListener() {
+        nameSignup = (EditText) findViewById(R.id.editNameSignup);
+        phoneSignup = (EditText) findViewById(R.id.editPhoneSignup);
+        final Button submit_signup = (Button) findViewById(R.id.submit_signup);
+        final List <User> UserAccounts = null;
+        submit_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String getname=  name.getText().toString();
-                String getphone= phone.getText().toString();
+                String getname = nameSignup.getText().toString();
+                String getphone = phoneSignup.getText().toString();
 
                 RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.111:3000/")).build();
                 MyApi api = adapter.create(MyApi.class);
-                api.Login(getname, getphone, new Callback<User>()
+                api.SignUp(getname, getphone, getphone, new Callback<User>()
 
                 {
 
                     public void success(User user, Response response) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                        Intent intent = new Intent(getApplicationContext(), Login.class);
                         startActivity(intent);
                     }
 
@@ -53,15 +56,9 @@ public class Login  extends Activity {
                 });
             }
         });
+    }
 
 
 
 
-
-}
-
-}
-
-
-
-
+    }
