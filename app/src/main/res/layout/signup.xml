@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="info.androidhive.materialtabs.fragments.OneFragment">
+
     <LinearLayout
         android:id="@+id/LinearLayout01"
         android:orientation="vertical"
@@ -66,6 +67,7 @@
                 android:orientation="horizontal"
                 />
 
+            <!--android:layout_margin="10dp"/>-->
 
         </RelativeLayout>
 
@@ -73,45 +75,108 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="من فضلك ادخل السؤال"
+            android:text="من فضلك ادخل بياناتك"
             android:id="@+id/login"
             android:textAlignment="center"
             android:textSize="28dp"
-            android:layout_marginTop="30dp"
-            android:layout_weight="0.39" />
+            android:layout_marginTop="30dp"/>
 
         <RelativeLayout
-            android:layout_width="370dp"
-            android:layout_height="191dp">
+            android:layout_width="333dp"
+            android:layout_height="100dp">
 
             <ImageView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:id="@+id/MicImg"
-                android:src="@drawable/ic_mic"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlayImgSignup"
+                android:src="@drawable/ic_avatar"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentLeft="false"/>
-
-            <ImageView
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:id="@+id/CameraImg"
-                android:src="@drawable/ic_camera"
-                android:layout_alignParentBottom="true"
-                android:layout_alignTop="@+id/MicImg"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/MicImg"
-                android:layout_toStartOf="@+id/MicImg"
-                android:layout_alignParentEnd="false" />
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="الاسم"
+                android:ems="10"
+                android:id="@+id/editNameSignup"
+                android:layout_alignParentBottom="true"
+                android:layout_alignTop="@+id/imageView3"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/imageView3"
+                android:layout_toEndOf="@+id/imageView3" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="333dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/ic_phone"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/editPhoneSignup"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:text="رقم الهاتف"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/imageView4"
+                android:layout_toEndOf="@+id/imageView4" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="333dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView5"
+                android:src="@drawable/ic_phone"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/resubmitPhone"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:text="رقم الهاتف"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toRightOf="@+id/imageView5"
+                android:layout_toEndOf="@+id/imageView5" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -122,17 +187,17 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="ادخل"
-                android:id="@+id/button"
+                android:id="@+id/submit_signup"
                 android:backgroundTint="#b6199657"
                 android:clickable="true"
                 android:textColor="#ffffff"
                 android:textSize="22dp"
+                android:onClick="CreateUser"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
 
     </LinearLayout>
-
 
 </RelativeLayout>
