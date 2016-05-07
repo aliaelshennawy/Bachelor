@@ -4,14 +4,19 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+import models.Problem;
 import models.User;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
 
 
 import retrofit.Callback;
+import retrofit.http.Part;
+import retrofit.http.Path;
+import retrofit.mime.TypedFile;
 //import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -20,13 +25,25 @@ import retrofit.Callback;
 class AccessToken { @SerializedName("access_token") private String accessToken; }
 
 public interface MyApi {
+    public static final String BASE_URL = "";
     @FormUrlEncoded
     @POST("/login")
     void Login(@Field("session[name]") String name , @Field("session[password]")String password, Callback<User> callback);
     @FormUrlEncoded
     @POST("/users/")
-    void SignUp(@Field("user[name]") String name , @Field("user[password]")String password,@Field("user[password_confirmation]")String password_confirmation, Callback<User> callback);
-
-
-
+    void SignUp(@Field("user[name]") String name , @Field("user[password]")String password,@Field("user[password_confirmation]")String password_confirmation,@Field("user[status]") String status, Callback<User> callback);
+//@POST("/problems")
+//void Problem(@Field(p))
+@FormUrlEncoded
+@POST("/imgupload")
+void uploadImage(@Field("problem[photo]") String photo, @Field("problem[title]") String title, Callback<Problem> cb);
+@GET("/problems/get_photo")
+void storeImage(@Path("id") int id ,Callback<Problem> cb);
+@FormUrlEncoded
+@POST("/problems/{user_id}")
+void postProblem(@Field("problem[photo]") String photo , @Field("problem[title]")String title,@Field("problem[audio]") String audio,@Path("user_id") int user_id, Callback<Problem> callback);
+@GET("/problems")
+    void getAllProblems(Callback<List<models.Problem>> callback);
+//@Post
+    //void tagroba (@Path ("
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,12 +24,20 @@ public class SignUp extends Activity{
 
 EditText phoneSignup;
 EditText nameSignup;
+ImageView engineerImg;
+ImageView farmerImg;
+Boolean clicked;
+    String status;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        clicked=false;
 
         nameSignup = (EditText) findViewById(R.id.editNameSignup);
         phoneSignup = (EditText) findViewById(R.id.editPhoneSignup);
+        engineerImg =(ImageView) findViewById(R.id.engineerImg);
+        farmerImg = (ImageView) findViewById(R.id.farmerImg);
         final Button submit_signup = (Button) findViewById(R.id.submit_signup);
         final List <User> UserAccounts = null;
         submit_signup.setOnClickListener(new View.OnClickListener() {
@@ -38,16 +47,37 @@ EditText nameSignup;
                 String getname = nameSignup.getText().toString();
                 String getphone = phoneSignup.getText().toString();
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.111:3000/")).build();
+                farmerImg.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                    status="farmer";
+                    }
+                });
+                engineerImg.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        status="engineer";
+                    }
+                });
+
+
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.101:3000/")).build();
                 MyApi api = adapter.create(MyApi.class);
-                api.SignUp(getname, getphone, getphone, new Callback<User>()
+                api.SignUp(getname, getphone, getphone,status,  new Callback<User>()
 
                 {
 
                     public void success(User user, Response response) {
+                       // Log.d("Useris:",status);
+                        if (status=="farmer") {
+                            Intent intent = new Intent(getApplicationContext(), LoginFarmer.class);
+                            startActivity(intent);
+                        }
+                        else if(status=="engineer") {
+                            Intent intent = new Intent(getApplicationContext(), LoginEngineer.class);
+                            startActivity(intent);
+                        }
 
-                        Intent intent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(intent);
                     }
 
                     public void failure(RetrofitError error) {

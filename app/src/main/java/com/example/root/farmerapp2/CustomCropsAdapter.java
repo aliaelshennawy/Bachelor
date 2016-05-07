@@ -5,6 +5,7 @@ package com.example.root.farmerapp2;
  */
 import android.app.Activity;
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,13 @@ class CustomCropsAdapter extends ArrayAdapter<String> {
         return rowView;
 
     }
-
-
+//  public List GetCheckedItems () {
+//      SparseBooleanArray checked = list.getCheckedItemPositions();
+//
+//      for (int i = 0; i < list.getAdapter().getCount(); i++) {
+//          if (checked.get(i)) {
+//              // Do something
+//          }
+//      }
+//  return }
 }

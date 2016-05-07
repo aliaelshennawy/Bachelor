@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
     # This route sends requests to our naked url to the *cool* action in the *gif* controller.
+ 
  get '/signup' => 'users#new'
     post '/users' => 'users#create'
 get '/users' => 'users#index'
@@ -9,10 +10,30 @@ get '/users' => 'users#index'
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
-
+  get '/problems' => 'problems#index'
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  post '/imgupload' => 'problems#create'
+  get '/problems/get_audio' => 'problems#index_audio'
+  get '/problems/get_photo' => 'problems#index_photo'
+  get '/replies' => 'replies#index' #Get all replies for a specific question
+  get '/reply' => 'replies#show' #Show a specific reply
+  post '/replyCreate' => 'replies#create' #Create Reply
+  get '/advices' => 'advices#index'
+  get '/advice' => 'advices#show'
+  post '/adviceCreate' => 'advices#create'
+ # post '/problems' => 'problems#create'
+  #post 
+  post '/problems/:user_id' => 'problems#create'
+#resources :problems, only: [:new, :create, :index, :destroy
+ #get '/Problems'
+# root to: 'problems#index'
+# namespace :api , defaults: {format: 'json'} do
+#   scope module: :v1 do
+#     post "/problem/new_problem" => 'problems#create'
 
+
+# post '/pictures'
 
 end
   # The priority is based upon order of creation: first created -> highest priority.

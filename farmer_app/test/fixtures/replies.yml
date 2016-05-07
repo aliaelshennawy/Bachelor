@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  audio: MyString
+  photo: MyString
+  problem_id: 1
+  id: 1
+
+two:
+  audio: MyString
+  photo: MyString
+  problem_id: 1
+  id: 1

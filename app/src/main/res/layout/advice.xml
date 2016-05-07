@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="info.androidhive.materialtabs.fragments.OneEngFragment">
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:orientation="vertical"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:weightSum="1">
+
+        <TabWidget
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:background="#199657"
+            android:baselineAligned="false"
+            android:id="@android:id/tabs">
+        </TabWidget>
+
+        <FrameLayout
+            android:layout_height="0dp"
+            android:layout_width="fill_parent"
+            android:id="@android:id/tabcontent">
+
+
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="left|top"
+                android:src="@drawable/ic_plant" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="من فضلك ادخل نصيحتك"
+            android:id="@+id/advice_txt"
+            android:textAlignment="center"
+            android:textSize="28dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.79" />
+
+        <RelativeLayout
+            android:layout_width="370dp"
+            android:layout_height="191dp">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:id="@+id/adviceRec"
+                android:src="@drawable/ic_mic"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentLeft="false"/>
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:id="@+id/adviceCam"
+                android:src="@drawable/ic_camera"
+                android:layout_alignParentBottom="true"
+                android:layout_alignTop="@+id/MicImg"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/MicImg"
+                android:layout_toStartOf="@+id/MicImg"
+                android:layout_alignParentEnd="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="168dp">
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="ادخل"
+                android:id="@+id/SubmitAdvice"
+                android:backgroundTint="#b6199657"
+                android:clickable="true"
+                android:textColor="#ffffff"
+                android:textSize="22dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

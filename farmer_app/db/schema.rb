@@ -11,11 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322132709) do
+ActiveRecord::Schema.define(version: 20160503213352) do
 
   create_table "advices", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "audio",      limit: 255
+    t.integer  "id",    limit: 4
+    t.string   "photo",      limit: 255
   end
 
   create_table "crops", force: :cascade do |t|
@@ -48,11 +51,41 @@ ActiveRecord::Schema.define(version: 20160322132709) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "problems", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.string   "text",       limit: 255
+  create_table "pictures", force: :cascade do |t|
+    t.string   "string",     limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "problems", force: :cascade do |t|
+    t.string   "title",              limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.string   "photo",              limit: 255
+    t.string   "audio",              limit: 255
+    t.integer  "id",            limit: 4
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.string   "audio",      limit: 255
+    t.string   "photo",      limit: 255
+    t.integer  "problem_id", limit: 4
+    t.integer  "id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "user_problems", force: :cascade do |t|
+    t.integer  "user_a_id",  limit: 4
+    t.integer  "user_b_id",  limit: 4
+    t.integer  "problem_id", limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,6 +93,8 @@ ActiveRecord::Schema.define(version: 20160322132709) do
     t.string   "password_digest", limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "status",          limit: 255
+    t.integer  "id",         limit: 4
   end
 
 end

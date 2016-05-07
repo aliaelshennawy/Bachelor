@@ -76,54 +76,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="من فضلك ادخل بياناتك"
-            android:id="@+id/login"
-            android:textAlignment="center"
-            android:textSize="28dp"
-            android:layout_marginTop="30dp"/>
-
         <RelativeLayout
             android:layout_width="333dp"
-            android:layout_height="100dp">
+            android:layout_height="81dp">
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/PlayImgSignup"
                 android:src="@drawable/ic_avatar"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentBottom="true" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="الاسم"
                 android:ems="10"
                 android:id="@+id/editNameSignup"
-                android:layout_alignParentBottom="true"
-                android:layout_alignTop="@+id/imageView3"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/imageView3"
-                android:layout_toEndOf="@+id/imageView3" />
+                android:layout_toEndOf="@+id/PlayImgSignup"
+                android:layout_alignTop="@+id/PlayImgSignup"
+                android:editable="false"
+                android:layout_alignParentBottom="true"
+                android:hint="الأسم"
+                android:layout_toRightOf="@+id/PlayImgSignup" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="333dp"
-            android:layout_height="100dp">
+            android:layout_height="85dp">
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView4"
                 android:src="@drawable/ic_phone"
@@ -140,20 +131,19 @@
                 android:ems="10"
                 android:id="@+id/editPhoneSignup"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:text="رقم الهاتف"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/imageView4"
-                android:layout_toEndOf="@+id/imageView4" />
+                android:layout_toEndOf="@+id/imageView4"
+                android:hint="رقم الهاتف"
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="333dp"
-            android:layout_height="100dp">
+            android:layout_height="83dp">
 
             <ImageView
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView5"
                 android:src="@drawable/ic_phone"
@@ -170,12 +160,12 @@
                 android:ems="10"
                 android:id="@+id/resubmitPhone"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:text="رقم الهاتف"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_toRightOf="@+id/imageView5"
-                android:layout_toEndOf="@+id/imageView5" />
+                android:layout_toEndOf="@+id/imageView5"
+                android:hint="رقم الهاتف"
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
@@ -183,19 +173,38 @@
             android:layout_width="match_parent"
             android:layout_height="168dp">
 
-            <Button
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:text="ادخل"
-                android:id="@+id/submit_signup"
-                android:backgroundTint="#b6199657"
-                android:clickable="true"
-                android:textColor="#ffffff"
-                android:textSize="22dp"
-                android:onClick="CreateUser"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:id="@+id/engineerImg"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/engineer" />
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:id="@+id/farmerImg"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/farmer" />
         </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ادخل"
+            android:id="@+id/submit_signup"
+            android:backgroundTint="#b6199657"
+            android:clickable="true"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:onClick="CreateUser"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
 
 
     </LinearLayout>

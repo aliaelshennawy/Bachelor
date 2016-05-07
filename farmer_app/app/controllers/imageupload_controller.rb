@@ -1,1 +1,1 @@
-class ImageUploadController < ApplicationController
+apiclass ImageUploadController < ApplicationController

@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class FourFragment extends Fragment{
 //        super.onCreate(savedInstanceState);
 //    }
 //
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,6 +99,15 @@ public class FourFragment extends Fragment{
 
         return rlLayout;
     }
+      public SparseBooleanArray GetCheckedItems () {
+      SparseBooleanArray checked = list.getCheckedItemPositions();
+
+      for (int i = 0; i < list.getAdapter().getCount(); i++) {
+          if (checked.get(i)) {
+              System.out.println(i);
+          }
+      }
+  return checked;}
 
 
 
