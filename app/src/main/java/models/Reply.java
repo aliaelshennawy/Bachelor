@@ -28,16 +28,16 @@ public class Reply {
         this.problem_id = problem_id;
     }
 
-    public int getIdl() {
-        return idl;
+    public int getId() {
+        return id;
     }
 
-    public void setIdl(int idl) {
-        this.idl = idl;
+    public void setId(int id) {
+        this.id = id;
     }
 
     String audio;
     String photo;
     int problem_id;
-    int idl
+    int id;
 }

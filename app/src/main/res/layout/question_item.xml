@@ -9,15 +9,23 @@
     tools:context="com.example.root.farmerapp2.MainEngineerActivity$PlaceholderFragment">
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:id="@+id/returnImage"/>
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/returnAudio"
         android:src="@drawable/ic_play" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:id="@+id/replyImg"
+        android:src="@drawable/ic_reply"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="45dp" />
 
 
 </LinearLayout>

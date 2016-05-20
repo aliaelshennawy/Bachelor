@@ -1,6 +1,7 @@
 package com.example.root.farmerapp2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Problem>{
     private LayoutInflater inflater;
     ImageView imgQues;
     ImageView playQues;
+    ImageView reply;
 
 
     ArrayAdapter<Problem> problems;
@@ -43,7 +45,14 @@ public class ProblemArrayAdapter extends ArrayAdapter<Problem>{
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.question_item, parent, false);
 
+            reply = (ImageView) convertView.findViewById(R.id.replyImg);
+            reply.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(v.getContext(), ReplyActivity.class);
+                    v.getContext().startActivity(myIntent);
 
+                }
+            });
             // playQues =(ImageView) convertView.findViewById(R.id.returnAudio);
         }
         imgQues = (ImageView) convertView.findViewById(R.id.returnImage);
