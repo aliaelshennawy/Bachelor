@@ -1,8 +1,6 @@
 package com.example.root.farmerapp2;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,27 +9,29 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import models.Problem;
 
 /**
  * Created by root on 07/05/16.
  */
-public class ImageListAdapter extends ArrayAdapter {
+public class ProblemArrayAdapter extends ArrayAdapter<Problem>{
     private Context context;
     private LayoutInflater inflater;
     ImageView imgQues;
     ImageView playQues;
 
-    private String[] imageUrls;
-    private  String[] audioUrls;
+
+    ArrayAdapter<Problem> problems;
 
 
-    public ImageListAdapter(Context context, String[] imageUrls ,String []audioUrls) {
-        super(context, R.layout.question_item, imageUrls);
+    public ProblemArrayAdapter(Context context,ArrayList<Problem> problems) {
+        super(context, R.layout.question_item, problems);
 
         this.context = context;
-        this.imageUrls = imageUrls;
-        this.audioUrls=audioUrls;
+
+
 
 
         inflater = LayoutInflater.from(context);
@@ -39,19 +39,20 @@ public class ImageListAdapter extends ArrayAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        Problem problem = getItem(position);
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.question_item, parent, false);
 
-            imgQues = (ImageView) convertView.findViewById(R.id.returnImage);
-           // playQues =(ImageView) convertView.findViewById(R.id.returnAudio);
-        }
 
+            // playQues =(ImageView) convertView.findViewById(R.id.returnAudio);
+        }
+        imgQues = (ImageView) convertView.findViewById(R.id.returnImage);
         Picasso
                 .with(context)
-                .load(imageUrls[position])
+                .load(problem.getPhoto())
                 .fit()
                 .error(R.drawable.error)
-                .into((ImageView) imgQues);
+                .into(imgQues);
 //playQues.setTag(position);
 //      playQues.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {

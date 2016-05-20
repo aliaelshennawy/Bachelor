@@ -44,5 +44,24 @@ public class User {
     }
 
     String password;
+    String passwordConfig;
+
+    public String getRegisteration_id() {
+        return registeration_id;
+    }
+
+    public void setRegisteration_id(String registeration_id) {
+        this.registeration_id = registeration_id;
+    }
+
+    public String getPasswordConfig() {
+        return passwordConfig;
+    }
+
+    public void setPasswordConfig(String passwordConfig) {
+        this.passwordConfig = passwordConfig;
+    }
+
+    String registeration_id;
 
 }

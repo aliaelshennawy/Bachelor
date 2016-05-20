@@ -40,6 +40,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import models.Problem;
 import models.User;
@@ -63,11 +64,7 @@ public class OneEngFragment extends Fragment {
     public LinearLayout lLayout;
     URL dataSrcUrl;
     int user_id;
-    URL picassoUrl;
-   // ArrayList<String> audioUrls = new ArrayList<String>();
-   // List<String> picsUrls = new ArrayList<String>();
-    String [] picsUrls=new String[20];
-    String [] audioUrls=new String[20];
+    int itemPos;
     ArrayList<Problem> problemList;
     ListView pListView; //Problems list view in engineer side
     private FragmentActivity faActivity;
@@ -81,78 +78,65 @@ public class OneEngFragment extends Fragment {
         // Replace LinearLayout by the type of the root element of the layout you're trying to load
         final LinearLayout lLayout    = (LinearLayout)    inflater.inflate(R.layout.questions, container, false);
 
-        final SharedPreferences pPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        user_id=pPref.getInt("user_id",500);
+//        final SharedPreferences pPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+//        user_id=pPref.getInt("id",500);
+//
+        SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        int myIntValue = sp.getInt("engineer_id", -1);
+        Log.d("UserEngID", "" + myIntValue);
 
        // CustomQuestionsAdapter questionsAdapter = new CustomQuestionsAdapter(getActivity().getApplicationContext(),S)
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.0.136:3000/")).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
         MyApi api = adapter.create(MyApi.class);
      api.getAllProblems(new Callback<List<Problem>>() {
 
          @Override
 
-         public void success(List<Problem> problems, Response response) {
-             Log.d("GET PROBLEMS", "Succeeded");
-             for (int i = 0; i < problems.size(); i++) {
-                 picsUrls[i] = problems.get(i).getPhoto();
-                 audioUrls[i]=problems.get(i).getAudio();
-               //  Log.d("PIC URL", picsUrls[i]);
-               }
-            //CustomQuestionsAdapter adapter1 = new CustomQuestionsAdapter(getActivity(),problems);
-             System.out.println(Arrays.toString(picsUrls));
-                 ImageListAdapter quesAdapter = new ImageListAdapter(getActivity(), picsUrls,audioUrls);
+         public void success(final List<Problem> problems, Response response) {
+Log.d("Problem Get", "Success");
+
+final ArrayList<Problem> arrayListProblems = new ArrayList<Problem>();
+             arrayListProblems.clear();
+             arrayListProblems.addAll(problems);
+
+
+             ProblemArrayAdapter quesAdapter = new ProblemArrayAdapter(getActivity(),arrayListProblems);
+
                  pListView = (ListView) lLayout.findViewById(R.id.questionsList);
                  pListView.setAdapter(quesAdapter);
+             quesAdapter.notifyDataSetChanged();
 
                  pListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                      @Override
                      public void onItemClick(AdapterView<?> parent, View view,
                                              int position, long id) {
+                         Object item = pListView.getAdapter().getItem(position);
+                         itemPos = pListView.getSelectedItemPosition();
+
+
                          // TODO Auto-generated method stub
-                         //  String Slecteditem = itemname[+position];
+                         try {
+                             MediaPlayer player = new MediaPlayer();
+                             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                             player.setDataSource(arrayListProblems.get(position).getAudio());
+                             player.prepare();
+                             player.start();
+                         } catch (Exception e) {
+                             // TODO: handle exception
+                         }
+
 
                      }
                  });
-//                 pListView = (ListView) lLayout.findViewById(R.id.questionsList);
-//                 pListView.setAdapter(adapter1);
-//
-//                 pListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//                     @Override
-//                     public void onItemClick(AdapterView<?> parent, View view,
-//                                             int position, long id) {
-//                         // TODO Auto-generated method stub
-//                         //  String Slecteditem = itemname[+position];
-//
-//                     }
-//                 });
-
-
-                 //  audioUrls.add(problems.get(i).getAudio());
 
              }
-         //}
 
          @Override
          public void failure(RetrofitError error) {
              Log.d("GET PROBLEMS", "Failed");
          }
      });
-//        CustomQuestionsAdapter quesAdapter =new CustomQuestionsAdapter(super.getActivity(),picsUrls);
-//        pListView=(ListView) lLayout.findViewById(R.id.questionsList);
-//        pListView.setAdapter(quesAdapter);
-//
-//        pListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                // TODO Auto-generated method stub
-//                //  String Slecteditem = itemname[+position];
-//
-//            }
-//        });
 
 
 
@@ -162,33 +146,3 @@ public class OneEngFragment extends Fragment {
 
 
 }
-
-
-
-////audioPlay=(ImageView) view.findViewById(R.id.returnAudio);
-//        audioPlay.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                try {
-//                    MediaPlayer player = new MediaPlayer();
-//                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                    player.setDataSource(String.valueOf(dataSrcUrl));
-//                    player.prepare();
-//                    player.start();
-//                } catch (Exception e) {
-//                    // TODO: handle exception
-//                }
-//
-//
-//
-//            }   });
-//
-//
-//
-//
-//                ivBitmap = (ImageView) view.findViewById(R.id.imgBitmap);
-//
-//        Picasso.with(getContext())
-//                .load(String.valueOf(picassoUrl))
-//                .into(ivBitmap);
-//
-//

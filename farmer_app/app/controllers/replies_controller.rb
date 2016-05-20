@@ -20,7 +20,7 @@ class RepliesController < ApplicationController
   	private
 
   	def reply_params
-  		param.require(:reply).permit(:photo,:audio,:audio_id,:id)
+  		param.require(:reply).permit(:photo,:audio,:problem_id,:id)
   	end
   
 end

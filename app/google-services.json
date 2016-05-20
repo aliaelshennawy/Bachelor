@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "30405012721",
+    "project_id": "farmerapp-d2c90"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30405012721:android:a7401dbe1237c2de",
+        "android_client_info": {
+          "package_name": "com.example.root.farmerapp2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1v0uS6ZjtYW-1GLHCKCK4iZd5B2QITcg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

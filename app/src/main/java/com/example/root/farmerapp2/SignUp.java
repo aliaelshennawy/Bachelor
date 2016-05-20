@@ -1,8 +1,12 @@
 package com.example.root.farmerapp2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +32,7 @@ ImageView engineerImg;
 ImageView farmerImg;
 Boolean clicked;
     String status;
+    String registeration_id;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,10 @@ Boolean clicked;
         engineerImg =(ImageView) findViewById(R.id.engineerImg);
         farmerImg = (ImageView) findViewById(R.id.farmerImg);
         final Button submit_signup = (Button) findViewById(R.id.submit_signup);
+
+        String myStringValue = PreferenceManager.getDefaultSharedPreferences(SignUp.this).getString("registerId", "defaultStringIfNothingFound");
+        Log.d("Registeration id",myStringValue);
+
         final List <User> UserAccounts = null;
         submit_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +70,9 @@ Boolean clicked;
                 });
 
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.101:3000/")).build();
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
                 MyApi api = adapter.create(MyApi.class);
-                api.SignUp(getname, getphone, getphone,status,  new Callback<User>()
+                api.SignUp(getname, getphone, getphone,status, registeration_id, new Callback<User>()
 
                 {
 

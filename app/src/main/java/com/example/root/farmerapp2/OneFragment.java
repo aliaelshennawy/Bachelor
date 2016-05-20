@@ -5,19 +5,19 @@ package com.example.root.farmerapp2;
  */
 
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.media.MediaPlayer;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-        import android.preference.PreferenceManager;
-        import android.provider.MediaStore;
+import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-        import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,80 +26,89 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-        import com.cloudinary.Cloudinary;
-        import com.cloudinary.utils.ObjectUtils;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import models.Problem;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
-        import java.io.ByteArrayInputStream;
-        import java.io.File;
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.UnsupportedEncodingException;
-        import java.net.URL;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Map;
+public class OneFragment extends Fragment {
 
-        import models.Problem;
-        import models.User;
-        import retrofit.Callback;
-        import retrofit.RestAdapter;
-        import retrofit.RetrofitError;
-        import retrofit.client.Response;
-
-
-public class OneFragment extends Fragment{
-
+    public static int count = 0;
+    int TAKE_PHOTO_CODE = 0;
+    File newfile;
+    int i = 0;
+    Uri outputFileUri;
+    Map uploadResult;
+    File audioFile;
+    int user_id;
+    String regitsration_id;
+    ArrayList<Object> imageArray;
+    ArrayList<Object> audioArray;
+    Button submit;
+    InputStream stream;
+    Map uploadAudio;
+    private RelativeLayout Rlayout;
+    private FragmentActivity faActivity;
+    private ImageView ivImage = null;
+    private ImageView imgPLay = null;
+    private ImageView imgRecord = null;
+    private MediaRecorder myAudioRecorder;
+    private String outputFile = null;
+    private String outPutImage = null;
+    private Button Adkhel = null;
     public OneFragment() {
 
 
         // Required empty public constructor
     }
-    int TAKE_PHOTO_CODE = 0;
-    public static int count = 0;
-    private RelativeLayout Rlayout;
-    private FragmentActivity faActivity;
-    private ImageView ivImage = null;
-    private ImageView imgPLay = null;
-    private ImageView imgRecord =null;
-    File newfile;
-    int i=0;
-    private MediaRecorder myAudioRecorder;
-    private String outputFile = null;
-    private  String outPutImage =null;
-    private Button Adkhel = null;
-   Uri outputFileUri;
-    Map uploadResult;
-    File audioFile;
-    int user_id;
-    ArrayList<Object> imageArray;
-    ArrayList<Object> audioArray;
-Button submit;
-    InputStream stream;
-    Map uploadAudio;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-       final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
         final File newdir = new File(dir);
 
 //        Log.d("Directory sasd" , dir);
-        faActivity  = (FragmentActivity)    super.getActivity();
-        Rlayout    = (RelativeLayout)    inflater.inflate(R.layout.fragment_one, container, false);
-        final SharedPreferences pPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        user_id=pPref.getInt("user_id",500);
+        faActivity = (FragmentActivity) super.getActivity();
+        Rlayout = (RelativeLayout) inflater.inflate(R.layout.fragment_one, container, false);
+//        final SharedPreferences prefsFarmer = PreferenceManager.getDefaultSharedPreferences(getContext());
+//        user_id = prefsFarmer.getInt("farmer_id", 400);
+        SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        int myIntValue = sp.getInt("farmer_id", -1);
+        Log.d("UserID", "" + myIntValue);
 
-        imgPLay=(ImageView)Rlayout.findViewById(R.id.playImg);
+
+
+//        final SharedPreferences reg = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+//        reg_id= reg.getString("registerId", "");
+
+
+        imgPLay = (ImageView) Rlayout.findViewById(R.id.playImg);
 
         imgPLay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.guitar);
-                if(mp != null){
+                if (mp != null) {
                     mp.start();
                 }
 
-            }   });
+            }
+        });
 
         ivImage = (ImageView) Rlayout.findViewById(R.id.CameraImg);
         ivImage.setOnClickListener(new View.OnClickListener() {
@@ -142,58 +151,58 @@ Button submit;
                     public void run() {
                         //your code here
 
-                Map config = new HashMap();
-               // Map  audio = new HashMap();
+                        Map config = new HashMap();
+                        // Map  audio = new HashMap();
 
-                config.put("cloud_name", "dsm9tcfpq");
-                config.put("api_key", "433145311994214");
-                config.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
+                        config.put("cloud_name", "dsm9tcfpq");
+                        config.put("api_key", "433145311994214");
+                        config.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
 //                        audio.put("cloud_name", "dsm9tcfpq");
 //                        audio.put("api_key", "433145311994214");
 //                        audio.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
-                Cloudinary cloudinary = new Cloudinary(config);
-                       // Cloudinary cloud = new Cloudinary(audio);
-                try {
+                        Cloudinary cloudinary = new Cloudinary(config);
+                        Cloudinary cloudinary1 = new Cloudinary(config);
+                        // Cloudinary cloud = new Cloudinary(audio);
+                        try {
 
 
+                            //cloudinary.uploader().upload(stream, ObjectUtils.emptyMap());
+                            uploadAudio = cloudinary.uploader().upload(audioFile, Cloudinary.asMap("resource_type", "video"));
+                            uploadResult = cloudinary1.uploader().upload(newfile, ObjectUtils.asMap());
 
-                   //cloudinary.uploader().upload(stream, ObjectUtils.emptyMap());
-                  uploadAudio= cloudinary.uploader().upload(audioFile, Cloudinary.asMap("resource_type", "video"));
-                    uploadResult= cloudinary.uploader().upload(newfile, ObjectUtils.asMap());
-
-                  String resultUrl = (String) uploadResult.get("url");
-                    Log.d("UrlToString",resultUrl);
-                   // Object audioUrl = uploadAudio.get("url");
-                    String audioUrl = (String) uploadAudio.get("url");
-                    Log.d("UrlToString",audioUrl);
+                            String resultUrl = (String) uploadResult.get("url");
+                            Log.d("UrlToString", resultUrl);
+                            // Object audioUrl = uploadAudio.get("url");
+                            String audioUrl = (String) uploadAudio.get("url");
+                            Log.d("UrlToString", audioUrl);
 
 
-                    RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.101:3000/")).build();
-                    MyApi api = adapter.create(MyApi.class);
-                    api.postProblem(resultUrl, "Problem", audioUrl,user_id, new Callback<Problem>()
+                            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+                            MyApi api = adapter.create(MyApi.class);
+                            api.postProblem(resultUrl, "Problem", audioUrl, user_id, new Callback<Problem>()
 
-                    {
+                            {
 
-                        public void success(Problem problem, Response response) {
-                             Log.d("Problem is:","UPLOADED");
+                                public void success(Problem problem, Response response) {
+                                    Log.d("Problem is:", "UPLOADED");
 
-                         //   Toast.makeText(getActivity().getApplicationContext(),user_id+"", Toast.LENGTH_LONG).show();
+                                    //   Toast.makeText(getActivity().getApplicationContext(),user_id+"", Toast.LENGTH_LONG).show();
+                                }
+
+                                public void failure(RetrofitError error) {
+                                    Log.d("Problem is:", "FAILING");
+                                    Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            //Log.d("OBJECT",resultUrl.toString());
+                            //imageArray =AddItemAndReturn(imageArray,resultUrl);
+                            //audioArray =AddItemAndReturn(audioArray,resultUrl);
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-
-                        public void failure(RetrofitError error) {
-                            Log.d("Problem is:","FAILING");
-                            Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    //Log.d("OBJECT",resultUrl.toString());
-                    //imageArray =AddItemAndReturn(imageArray,resultUrl);
-                    //audioArray =AddItemAndReturn(audioArray,resultUrl);
-
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }   }
+                    }
                 }.start();
 //                new Thread() {
 //                    @Override
@@ -223,30 +232,29 @@ Button submit;
         });
 
 
-
         //File fileFinal=new File(outputFileUri.getPath());
         //Log.v("HTTPGet", "Uri.toString == " + fileFinal.toString());
 
-      //TypedFile TypedFileFinal = new TypedFile("image/jpg",fileFinal);
+        //TypedFile TypedFileFinal = new TypedFile("image/jpg",fileFinal);
         //Log.v("HTTPGet", "Uri.toString == " + TypedFileFinal.toString());
-       //postImage(TypedFileFinal,"YARAB HAWENHAA");
+        //postImage(TypedFileFinal,"YARAB HAWENHAA");
 
 
-        imgRecord=(ImageView)Rlayout.findViewById(R.id.MicImg);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp3";
+        imgRecord = (ImageView) Rlayout.findViewById(R.id.MicImg);
+        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp4";
         audioFile = new File(outputFile);
         ;
 
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-       // myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        // myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         myAudioRecorder.setOutputFile(outputFile);
         //audioFile = new File(outputFile,"Audio");
-       // File audioFile = context.getCacheDir();
+        // File audioFile = context.getCacheDir();
         try {
-             stream = new ByteArrayInputStream(outputFile.getBytes("UTF-8"));
+            stream = new ByteArrayInputStream(outputFile.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -353,8 +361,7 @@ Button submit;
 //}
 
 
-
-//    public static void printMap(Map mp) {
+    //    public static void printMap(Map mp) {
 //        Iterator it = mp.entrySet().iterator();
 //        while (it.hasNext()) {
 //            Map.Entry pair = (Map.Entry)it.next();
@@ -394,7 +401,7 @@ Button submit;
 //    }
 //}
 
-//    public void UploadFile(Uri fileUri){
+    //    public void UploadFile(Uri fileUri){
 //        UploadcareClient client = UploadcareClient.demoClient();
 //
 //    Context context = getActivity().getApplicationContext();
@@ -414,10 +421,10 @@ Button submit;
 //            Log.e("Sucess","File uploaded correctly");
 //        }
 //    });}
-    public ArrayList<Object> AddItemAndReturn(ArrayList<Object> array,Object o){
+    public ArrayList<Object> AddItemAndReturn(ArrayList<Object> array, Object o) {
         array.add(o);
         return array;
     }
 
-    }
+}
 

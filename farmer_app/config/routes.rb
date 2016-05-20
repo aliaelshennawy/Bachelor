@@ -13,7 +13,7 @@ get '/users' => 'users#index'
   get '/problems' => 'problems#index'
   get '/signup' => 'users#new'
   post '/users' => 'users#create'
-  post '/imgupload' => 'problems#create'
+  #post '/imgupload' => 'problems#create'
   get '/problems/get_audio' => 'problems#index_audio'
   get '/problems/get_photo' => 'problems#index_photo'
   get '/replies' => 'replies#index' #Get all replies for a specific question
@@ -24,7 +24,8 @@ get '/users' => 'users#index'
   post '/adviceCreate' => 'advices#create'
  # post '/problems' => 'problems#create'
   #post 
-  post '/problems/:user_id' => 'problems#create'
+  post '/problems/:user_id' =>'problems#create'
+ #post '/problems' => 'problems#create'
 #resources :problems, only: [:new, :create, :index, :destroy
  #get '/Problems'
 # root to: 'problems#index'

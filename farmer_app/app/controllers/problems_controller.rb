@@ -20,9 +20,15 @@ class ProblemsController < ApplicationController
   #   end
   # end
   def create
-    @photo = Problem.new(problem_params)
-    if @photo.save
-      render :json => {message: "photo has been saved succesfully"}, status: 200
+    @problem = Problem.new(problem_params)
+    #@problem.user_id = params[:user_id]
+    if @problem.save
+      @not=Notification.new(:cause_id => @problem.user_id,:title => "Problem posted", :text =>"لديك سؤال جديد")
+      reg_ids=User.where(:status => "engineer").map{|e|e.registeration_id}
+      @not.save!
+      Notification.send_not(reg_ids,@not.text,@not.title)
+      #Notification.send_not("dCyXUZUlp6k:APA91bF33hOGc0eB0NH2ed-iNbwVFyzkzSOehLktbeNcC5UtJc9ZSdsVnGTY0BLFSAg0Kl7ZRMN1JAjqF6fQhRO5QrGmXNPPSVYYklegnUjIQJeXxgBN0qEeQrrUegVbjZIu-P4ItrGx","con","tITLE")
+      render :json => {message: "problem has been saved succesfully"}, status: 200
     else
      render :json => {result: "NOK" , message: "photo cannot be save"}, status: 422
     end
@@ -50,10 +56,9 @@ class ProblemsController < ApplicationController
     @photo=@problems.map{|e| {photo:e.photo , id:e.id}}
     render json:@photo , status:200
   end
+
   private
-
-
   def problem_params
-    params.require(:problem).permit(:photo, :title , :audio ,:id )
+    params.require(:problem).permit(:photo, :title , :audio ,:id , :user_id )
   end
 end

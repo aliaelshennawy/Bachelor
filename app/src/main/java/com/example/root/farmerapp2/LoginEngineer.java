@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class LoginEngineer extends Activity {
 
     EditText phone;
     EditText name;
+//    String reg_id;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +43,25 @@ public class LoginEngineer extends Activity {
                 String getphone= phone.getText().toString();
 
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.0.136:3000/")).build();
+
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
                 MyApi api = adapter.create(MyApi.class);
                 api.Login(getname, getphone, new Callback<User>()
 
                 {
 
                     public void success(User user, Response response) {
-                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(LoginEngineer.this);
-                        SharedPreferences.Editor editor =prefs.edit();
-                        editor.putInt("id",user.getId());
+//                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(LoginEngineer.this);
+//                        SharedPreferences.Editor editor =prefs.edit();
+//                        editor.putInt("id",user.getId());
+//                        String regId = user.getRegisteration_id();
+//                        Log.d("regId",regId);
+//                        Log.d("Success Login","Success");
+                        SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                      editor.putInt("engineer_id", user.getId());
+                        editor.commit();
+                        Log.d("Engineer_id",user.getId()+"");
                         Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
                         startActivity(intent);
                     }

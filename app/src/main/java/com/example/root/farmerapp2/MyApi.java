@@ -31,7 +31,7 @@ public interface MyApi {
     void Login(@Field("session[name]") String name , @Field("session[password]")String password, Callback<User> callback);
     @FormUrlEncoded
     @POST("/users/")
-    void SignUp(@Field("user[name]") String name , @Field("user[password]")String password,@Field("user[password_confirmation]")String password_confirmation,@Field("user[status]") String status, Callback<User> callback);
+    void SignUp(@Field("user[name]") String name, @Field("user[password]") String password, @Field("user[password_confirmation]") String password_confirmation, @Field("user[status]") String status, @Field("user[registeration_id]") String registeration_id, Callback<User> callback);
 //@POST("/problems")
 //void Problem(@Field(p))
 @FormUrlEncoded
@@ -44,6 +44,5 @@ void storeImage(@Path("id") int id ,Callback<Problem> cb);
 void postProblem(@Field("problem[photo]") String photo , @Field("problem[title]")String title,@Field("problem[audio]") String audio,@Path("user_id") int user_id, Callback<Problem> callback);
 @GET("/problems")
     void getAllProblems(Callback<List<models.Problem>> callback);
-//@Post
-    //void tagroba (@Path ("
+
 }

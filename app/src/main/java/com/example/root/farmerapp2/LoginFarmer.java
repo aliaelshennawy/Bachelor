@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,16 +41,22 @@ public class LoginFarmer extends Activity {
                 String getname=  name.getText().toString();
                 String getphone= phone.getText().toString();
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.101:3000/")).build();
+
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
                 MyApi api = adapter.create(MyApi.class);
                 api.Login(getname, getphone, new Callback<User>()
 
                 {
 
                     public void success(User user, Response response) {
-                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(LoginFarmer.this);
-                        SharedPreferences.Editor editor =prefs.edit();
-                        editor.putInt("id",user.getId());
+
+                        SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("farmer_id", user.getId());
+                        editor.commit();
+                        Log.d("UserLoginId",user.getId()+"");
+
+
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }
