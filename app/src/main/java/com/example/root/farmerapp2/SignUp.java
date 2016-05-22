@@ -45,8 +45,8 @@ Boolean clicked;
         farmerImg = (ImageView) findViewById(R.id.farmerImg);
         final Button submit_signup = (Button) findViewById(R.id.submit_signup);
 
-        String myStringValue = PreferenceManager.getDefaultSharedPreferences(SignUp.this).getString("registerId", "defaultStringIfNothingFound");
-        Log.d("Registeration id",myStringValue);
+        registeration_id = PreferenceManager.getDefaultSharedPreferences(SignUp.this).getString("registerId", "defaultStringIfNothingFound");
+        Log.d("Registeration id",registeration_id);
 
         final List <User> UserAccounts = null;
         submit_signup.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +79,22 @@ Boolean clicked;
                     public void success(User user, Response response) {
                        // Log.d("Useris:",status);
                         if (status=="farmer") {
+
+
+                            SharedPreferences sp = getSharedPreferences("", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("status", user.getStatus());
+                            editor.commit();
                             Intent intent = new Intent(getApplicationContext(), LoginFarmer.class);
                             startActivity(intent);
                         }
                         else if(status=="engineer") {
+                            SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("status", user.getStatus());
+                            editor.commit();
+                            String myStringValue2 = PreferenceManager.getDefaultSharedPreferences(SignUp.this).getString("registerId", "defaultStringIfNothingFound");
+                            Log.d("Registeration id",myStringValue2);
                             Intent intent = new Intent(getApplicationContext(), LoginEngineer.class);
                             startActivity(intent);
                         }

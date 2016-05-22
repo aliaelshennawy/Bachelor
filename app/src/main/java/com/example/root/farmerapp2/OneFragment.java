@@ -55,10 +55,6 @@ public class OneFragment extends Fragment {
     Map uploadResult;
     File audioFile;
     int user_id;
-    String regitsration_id;
-    ArrayList<Object> imageArray;
-    ArrayList<Object> audioArray;
-    Button submit;
     InputStream stream;
     Map uploadAudio;
     private RelativeLayout Rlayout;

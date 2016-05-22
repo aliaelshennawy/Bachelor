@@ -24,10 +24,11 @@ class ProblemsController < ApplicationController
     #@problem.user_id = params[:user_id]
     if @problem.save
       @not=Notification.new(:cause_id => @problem.user_id,:title => "Problem posted", :text =>"لديك سؤال جديد")
-      reg_ids=User.where(:status => "engineer").map{|e|e.registeration_id}
-      @not.save!
-      Notification.send_not(reg_ids,@not.text,@not.title)
-      #Notification.send_not("dCyXUZUlp6k:APA91bF33hOGc0eB0NH2ed-iNbwVFyzkzSOehLktbeNcC5UtJc9ZSdsVnGTY0BLFSAg0Kl7ZRMN1JAjqF6fQhRO5QrGmXNPPSVYYklegnUjIQJeXxgBN0qEeQrrUegVbjZIu-P4ItrGx","con","tITLE")
+     reg_ids=User.where(:status => "engineer")
+        @not.save!
+     for reg_id in reg_ids
+     Notification.send_not(reg_id.registeration_id,@not.text,@not.title)
+    end
       render :json => {message: "problem has been saved succesfully"}, status: 200
     else
      render :json => {result: "NOK" , message: "photo cannot be save"}, status: 422

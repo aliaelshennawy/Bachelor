@@ -53,8 +53,9 @@ public class RegistrationIntentService extends IntentService {
             // sent to your server. If the boolean is false, send the token to your server,
             // otherwise your server should have already received the token.
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
-            editorReg.putString("registerId" ,token).apply();
+            editorReg.putString("registerId", token).apply();
             editorReg.commit();
+
             // [END register_for_gcm]
         } catch (Exception e) {
             Log.e(TAG, "Failed to complete token refresh", e);

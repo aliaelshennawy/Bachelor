@@ -1,5 +1,6 @@
 package com.example.root.farmerapp2;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +30,7 @@ public class Main2Activity extends AppCompatActivity {
     private Toolbar toolbar2;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "Main2Activity";
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TabLayout tabLayout;
@@ -63,11 +64,13 @@ public class Main2Activity extends AppCompatActivity {
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
-                boolean sentToken = sharedPreferences
-                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+                boolean myIntValue = sp.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                Log.d("UserID", "" + myIntValue);
+//                SharedPreferences sp2 =
+//                        PreferenceManager.getDefaultSharedPreferences(context);
+//                boolean sentToken = sp2
+//                        .getBoolean(QuickstartPreferencesEngineer.SENT_TOKEN_TO_SERVER, false);
 
             }
         };
