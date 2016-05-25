@@ -3,9 +3,12 @@ package com.example.root.farmerapp2;
 /**
  * Created by root on 10/03/16.
  */
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -21,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -30,10 +34,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,102 +50,106 @@ import android.view.ViewGroup;
 
 import com.example.root.farmerapp2.R;
 
+import models.Problem;
+import models.Reply;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 
 public class TwoFragment extends Fragment {
+    ListView rListView;
+    ImageView playReplies;
+    SeekBar seekBarFrag2;
     public TwoFragment() {
         // Required empty public constructor
     }
-
-    private static final String TAG = "ChatActivity";
-
-    private ChatArrayAdapter chatArrayAdapter;
-    private ListView listView;
-    private EditText chatText;
-    private ImageView buttonSend;
-    private ImageView btnMic;
-    private ImageView btnPic;
-    int TAKE_PHOTO_CODE = 0;
-    public static int count = 0;
-    final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-
-
-    Uri imageUri   = null;
-   // CameraPhotoCapture CameraActivity = null;
-    private boolean side = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
         FragmentActivity faActivity  = (FragmentActivity)    super.getActivity();
         // Replace LinearLayout by the type of the root element of the layout you're trying to load
-        RelativeLayout ilLayout    = (RelativeLayout)    inflater.inflate(R.layout.fragment_two, container, false);
+        final SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        final RelativeLayout ilLayout    = (RelativeLayout)    inflater.inflate(R.layout.fragment_two, container, false);
+        int myProblemId = sp.getInt("problem_id", -1);
+        Log.d("problem_id", "" + myProblemId+"");
+        //Adding sound to the command in fragment 2
+        playReplies = (ImageView) ilLayout.findViewById(R.id.playImgReply);
+        seekBarFrag2 = (SeekBar) ilLayout.findViewById(R.id.seekBarReply);
+        seekBarFrag2.setRotation(180);
 
-        buttonSend = (ImageView) ilLayout.findViewById(R.id.send);
-        btnMic = (ImageView) ilLayout.findViewById(R.id.sendVoice);
-        btnPic = (ImageView) ilLayout.findViewById(R.id.sendPic);
-
-        listView = (ListView) ilLayout.findViewById(R.id.msgview);
-        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
-        File newdir = new File(dir);
-
-        chatArrayAdapter = new ChatArrayAdapter(super.getActivity(), R.layout.right);
-        listView.setAdapter(chatArrayAdapter);
-
-        chatText = (EditText) ilLayout.findViewById(R.id.msg);
-        chatText.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    return sendChatMessage();
+        playReplies.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.frag2);
+                if (mp != null) {
+                    mp.start();
                 }
-                return false;
+                ObjectAnimator progressAnimator = ObjectAnimator.ofInt(seekBarFrag2, "progress", 0, 100);
+                progressAnimator.setDuration(1850);
+                progressAnimator.setInterpolator(new LinearInterpolator());
+                progressAnimator.start();
+
             }
         });
-        newdir.mkdirs();
-        buttonSend.setOnClickListener(new View.OnClickListener() {
+
+
+
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+        MyApi api = adapter.create(MyApi.class);
+        api.getAllReplies(myProblemId,new Callback<List<Reply>>() {
+
             @Override
-            public void onClick(View arg0) {
-                sendChatMessage();
+
+            public void success(final List<Reply> replies, Response response) {
+                Log.d("Getting replies", "Success");
+                //Log.d("Photo of reply",replies.get(0).getPhoto().toString());
+
+                final ArrayList<Reply> arrayListReplies = new ArrayList<Reply>();
+                arrayListReplies.clear();
+                arrayListReplies.addAll(replies);
+
+
+                ReplyArrayAdapter replyAdapter = new ReplyArrayAdapter(getActivity(),arrayListReplies);
+
+               rListView = (ListView) ilLayout.findViewById(R.id.listReplies);
+                rListView.setAdapter(replyAdapter);
+                replyAdapter.notifyDataSetChanged();
+
+                rListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+
+                        // TODO Auto-generated method stub
+                        try {
+                            MediaPlayer player = new MediaPlayer();
+                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            player.setDataSource(arrayListReplies.get(position).getAudio());
+                            player.prepare();
+                            player.start();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+
+                    }
+                });
+
             }
-        });
-        btnPic.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View arg0) {
-                count++;
-                String file = dir + count + ".jpg";
-                File newfile = new File(file);
-                try {
-                    newfile.createNewFile();
-                } catch (IOException e) {
-                }
-
-                Uri outputFileUri = Uri.fromFile(newfile);
-
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-
-                startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+            public void failure(RetrofitError error) {
+                Log.d("Getting Replies", "Failed");
             }
         });
 
-        listView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        listView.setAdapter(chatArrayAdapter);
 
-        //to scroll the list view to bottom on data change
-        chatArrayAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                listView.setSelection(chatArrayAdapter.getCount() - 1);
-            }
-        });
         return ilLayout;
     }
 
-    private boolean sendChatMessage() {
-        chatArrayAdapter.add(new ChatMessage(side, chatText.getText().toString()));
-        chatText.setText("");
-        side = !side;
-        return true;
-    }
+
 
     }

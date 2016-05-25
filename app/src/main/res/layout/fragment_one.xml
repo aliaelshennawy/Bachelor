@@ -48,14 +48,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/seekBar"
-                android:layout_toEndOf="@+id/seekBar"
-                android:src="@drawable/ic_play" />
+                android:layout_toEndOf="@+id/seekFragment1"
+                android:src="@drawable/ic_play"
+                android:layout_toRightOf="@+id/seekFragment1" />
 
             <SeekBar
                 android:layout_width="305dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar"
+                android:id="@+id/seekFragment1"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"

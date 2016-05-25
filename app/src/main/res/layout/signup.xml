@@ -44,19 +44,19 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/playImg"
+                android:id="@+id/playSignup"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/seekBar"
-                android:layout_toEndOf="@+id/seekBar"
+                android:layout_toRightOf="@+id/seekSignup"
+                android:layout_toEndOf="@+id/seekSignup"
                 android:src="@drawable/ic_play" />
 
             <SeekBar
                 android:layout_width="305dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar"
+                android:id="@+id/seekSignup"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -65,7 +65,7 @@
                 android:layout_alignParentBottom="false"
                 android:clickable="true"
                 android:orientation="horizontal"
-                />
+                android:indeterminate="false" />
 
             <!--android:layout_margin="10dp"/>-->
 
@@ -174,22 +174,26 @@
             android:layout_height="168dp">
 
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="150dp"
+                android:layout_height="160dp"
                 android:id="@+id/engineerImg"
-                android:layout_alignParentTop="true"
+                android:src="@drawable/engineer"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/engineer" />
+                android:layout_marginLeft="20dp" />
 
             <ImageView
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="150dp"
+                android:layout_height="160dp"
                 android:id="@+id/farmerImg"
+                android:src="@drawable/farmer"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/farmer" />
+                android:padding="10dp"
+                android:layout_marginRight="20dp" />
         </RelativeLayout>
 
         <Button

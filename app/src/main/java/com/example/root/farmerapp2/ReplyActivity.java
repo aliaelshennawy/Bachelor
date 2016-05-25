@@ -1,12 +1,15 @@
 package com.example.root.farmerapp2;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +17,23 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import models.Problem;
+import models.Reply;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ReplyActivity extends AppCompatActivity {
    android.support.v7.widget.Toolbar toolbar;
@@ -32,7 +47,11 @@ public class ReplyActivity extends AppCompatActivity {
     public static int count = 0;
     int i = 0;
     File newfile;
+    File audioFile;
     Uri outputFileUri;
+    Map uploadResult;
+    Map uploadAudio;
+
     private String outPutImage = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +61,16 @@ public class ReplyActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(" ");
+        SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        final int problem_id = sp.getInt("problem_id", -1);
+        Log.d("Problem_id", "" + problem_id);
         //Initialising the reply view buttons
         replyRecord = (ImageView) findViewById(R.id.replyRec);
         replyImg = (ImageView) findViewById(R.id.replyCam);
         submitReply =(Button) findViewById(R.id.submitReply);
         //Setting up the directory and making the format to be saved as mp3
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.mp4";
+        audioFile = new File(outputFile);
         //Setting up the audio recorder to start recording recording on button click stopping recording when button clicked again
         myAudioRecorder = new MediaRecorder();
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -129,6 +152,70 @@ public class ReplyActivity extends AppCompatActivity {
                 });
                 newdir.mkdirs();
 
+
+
+            }
+        });
+        //Adding an action to the submitReply butoon to add the image taken and the audio recorded to cloud
+        submitReply.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        //your code here
+
+                        Map config = new HashMap();
+                        // Map  audio = new HashMap();
+
+                        config.put("cloud_name", "dsm9tcfpq");
+                        config.put("api_key", "433145311994214");
+                        config.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
+//                        audio.put("cloud_name", "dsm9tcfpq");
+//                        audio.put("api_key", "433145311994214");
+//                        audio.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
+                        Cloudinary cloudinary = new Cloudinary(config);
+                        Cloudinary cloudinary1 = new Cloudinary(config);
+                        // Cloudinary cloud = new Cloudinary(audio);
+                        try {
+
+
+                            //cloudinary.uploader().upload(stream, ObjectUtils.emptyMap());
+                            uploadAudio = cloudinary.uploader().upload(audioFile, Cloudinary.asMap("resource_type", "video"));
+                            uploadResult = cloudinary1.uploader().upload(newfile, ObjectUtils.asMap());
+
+                            String resultUrl = (String) uploadResult.get("url");
+                            Log.d("UrlToString", resultUrl);
+                            // Object audioUrl = uploadAudio.get("url");
+                            String audioUrl = (String) uploadAudio.get("url");
+                            Log.d("UrlToString", audioUrl);
+
+
+                            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+                            MyApi api = adapter.create(MyApi.class);
+                          api.createReply(resultUrl,audioUrl,problem_id, new Callback<Reply>() {
+                              @Override
+                              public void success(Reply reply, Response response) {
+                                  Log.d("Reply","SUCCESS");
+
+                              }
+
+                              @Override
+                              public void failure(RetrofitError error) {
+                                  Log.d("Reply","FAILURE");
+
+                              }
+                          });
+                            //Log.d("OBJECT",resultUrl.toString());
+                            //imageArray =AddItemAndReturn(imageArray,resultUrl);
+                            //audioArray =AddItemAndReturn(audiArray,resultUrl);
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
 
 
             }

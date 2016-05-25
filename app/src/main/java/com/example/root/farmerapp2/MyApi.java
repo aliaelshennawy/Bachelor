@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+import models.Advice;
 import models.Problem;
+import models.Reply;
 import models.User;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -41,11 +43,15 @@ void uploadImage(@Field("problem[photo]") String photo, @Field("problem[title]")
 void storeImage(@Path("id") int id ,Callback<Problem> cb);
 @FormUrlEncoded
 @POST("/problems/{user_id}")
-void postProblem(@Field("problem[photo]") String photo , @Field("problem[title]")String title,@Field("problem[audio]") String audio,@Path("user_id") int user_id, Callback<Problem> callback);
+void postProblem(@Field("problem[photo]") String photo , @Field("problem[title]")String title,@Field("problem[audio]") String audio,@Field("problem[user_id]") int user_id, Callback<Problem> callback);
 @GET("/problems")
 void getAllProblems(Callback<List<models.Problem>> callback);
 @FormUrlEncoded
 @POST("/replyCreate")
-void createReply(@Field("reply[photo]") String photo ,@Field("reply[audio]") String audio,@Field("reply[problem_id]") int problem, Callback<Problem> callback);
-
+void createReply(@Field("reply[photo]") String photo ,@Field("reply[audio]") String audio,@Field("reply[problem_id]") int problem_id, Callback<Reply> callback);
+@GET("/replies/{problem_id}")
+void getAllReplies(@Path("problem_id") int problem_id,Callback<List<models.Reply>> callback);
+@FormUrlEncoded
+@POST("/replyCreate")
+void postAdvice(@Field("advice[photo]") String photo,@Field("advice[audio]") String audio,Callback<Advice> callback);
 }

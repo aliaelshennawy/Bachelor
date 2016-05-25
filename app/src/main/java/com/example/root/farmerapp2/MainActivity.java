@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFrag(new TwoFragment(), "TWO");
         adapter.addFrag(new ThreeFragment(), "THREE");
        //<zx adapter.addFrag(new FourFragment(), "Four");
+
         viewPager.setAdapter(adapter);
     }
 

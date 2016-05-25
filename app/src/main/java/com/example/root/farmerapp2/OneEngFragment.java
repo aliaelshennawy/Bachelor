@@ -77,11 +77,7 @@ public class OneEngFragment extends Fragment {
         FragmentActivity faActivity  = (FragmentActivity)    super.getActivity();
         // Replace LinearLayout by the type of the root element of the layout you're trying to load
         final LinearLayout lLayout    = (LinearLayout)    inflater.inflate(R.layout.questions, container, false);
-
-//        final SharedPreferences pPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-//        user_id=pPref.getInt("id",500);
-//
-        SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        final SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
         int myIntValue = sp.getInt("engineer_id", -1);
         Log.d("UserEngID", "" + myIntValue);
 
@@ -111,6 +107,11 @@ final ArrayList<Problem> arrayListProblems = new ArrayList<Problem>();
                      @Override
                      public void onItemClick(AdapterView<?> parent, View view,
                                              int position, long id) {
+                      int problem_id=   arrayListProblems.get(position).getId();
+                         SharedPreferences.Editor editor = sp.edit();
+                         editor.putInt("problem_id",problem_id);
+                         editor.commit();
+                         Log.d("Problem_id",problem_id+"");
                          Object item = pListView.getAdapter().getItem(position);
                          itemPos = pListView.getSelectedItemPosition();
 

@@ -60,6 +60,6 @@ class ProblemsController < ApplicationController
 
   private
   def problem_params
-    params.require(:problem).permit(:photo, :title , :audio ,:id , :user_id )
+    params.require(:problem).permit(:photo, :title , :audio , :user_id )
   end
 end

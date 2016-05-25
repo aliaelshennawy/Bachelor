@@ -16,14 +16,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import models.Notification;
 import models.User;
 
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    ListView notList; //Initializing notification list
+
 
     /**
      * Called when message is received.
@@ -37,14 +41,33 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
-        CustomNotificationsAdapter notify = new CustomNotificationsAdapter(S)
-
-        if (from.startsWith("/topics/")) {
-            // message received from some topic.
-        } else {
-            // normal downstream message.
+        Log.d(TAG, " " + message);
+//        SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putString("notify_msg", message);
+//        editor.commit();
+        Notification notification_item = new Notification();
+        Notification notification_item_eng = new Notification();
+        if(message.equals("لديك نصيحة جديدة")) {
+            notification_item.setMessage(message);
+            notification_item.setNotifyIcon(R.drawable.ic_bell_black);
+            ThreeFragment.notify.add(notification_item);
         }
+        else {
+            if (message.equals("لقد جاوب المهندس على سؤالك")) {
+                notification_item.setMessage(message);
+                notification_item.setNotifyIcon(R.drawable.ic_bell);
+                ThreeFragment.notify.add(notification_item);
+            } else {
+                notification_item.setMessage("ليس لديك اى نصائح او اسئلة");
+                notification_item.setNotifyIcon(R.drawable.ic_bell_white);
+            }
+        }
+        ThreeFragment.notify.clear();
+        ThreeFragment.notify.add(notification_item);
+//        ThreeFragment.adapter.notifyDataSetChanged();
+
+
 
         // [START_EXCLUDE]
         /**

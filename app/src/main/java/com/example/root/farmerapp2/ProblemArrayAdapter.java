@@ -62,23 +62,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Problem>{
                 .fit()
                 .error(R.drawable.error)
                 .into(imgQues);
-//playQues.setTag(position);
-//      playQues.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//               try {
-//                   MediaPlayer player = new MediaPlayer();
-//                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                    player.setDataSource(String.valueOf(audioUrls[position]));
-//                    player.prepare();
-//                   player.start();
-//               } catch (Exception e) {
-//                   // TODO: handle exception
-//                }
-//
-//
-//
-//           }   });
+
         return convertView;
     }
 }

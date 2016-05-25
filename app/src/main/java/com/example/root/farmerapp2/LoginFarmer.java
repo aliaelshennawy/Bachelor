@@ -1,14 +1,18 @@
 package com.example.root.farmerapp2;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import models.User;
@@ -23,16 +27,38 @@ import retrofit.client.Response;
 public class LoginFarmer extends Activity {
 
     EditText phone;
+    SeekBar seekBarLogin;
     EditText name;
     String job;
+    ImageView playInfo;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_farmer);
+        seekBarLogin = (SeekBar) findViewById(R.id.seekLogin);
+       seekBarLogin.setRotation(180);
 
         name = (EditText) findViewById(R.id.editName);;
       phone = (EditText) findViewById(R.id.editPhone);
 
-;
+        //Adding sound to the command in Login Farmer
+        playInfo = (ImageView) findViewById(R.id.playLogin);
+
+        playInfo.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.login);
+                if (mp != null) {
+
+                    mp.start();
+
+                }
+
+                ObjectAnimator progressAnimator = ObjectAnimator.ofInt(seekBarLogin, "progress", 0, 100);
+                progressAnimator.setDuration(2000);
+                progressAnimator.setInterpolator(new LinearInterpolator());
+                progressAnimator.start();
+            }
+        });
+
     Button loginB = (Button) findViewById(R.id.submit_login);
         loginB.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,13 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="info.androidhive.materialtabs.fragments.OneFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:longClickable="false"
+        android:layout_weight="0.04"
+        android:id="@+id/relativeLayout">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playNotfications"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/seekFragment3"
+            android:layout_toEndOf="@+id/seekFragment3"
+            android:src="@drawable/ic_play" />
+
+        <SeekBar
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekFragment3"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="false"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:indeterminate="false" />
+
+
+    </RelativeLayout>
     <ListView
         android:id="@+id/listNotify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_below="@+id/relativeLayout">
     </ListView>
 
 

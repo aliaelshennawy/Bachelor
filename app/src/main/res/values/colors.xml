@@ -5,11 +5,5 @@
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#00a552</color>
-    <!--<color name="EngcolorPrimary">#125688</color>-->
-    <!--<color name="EngcolorPrimaryDark">#125688</color>-->
-    <!--<color name="EngtextColorPrimary">#FFFFFF</color>-->
-    <!--<color name="EngwindowBackground">#FFFFFF</color>-->
-    <!--<color name="EngnavigationBarColor">#000000</color>-->
-    <!--<color name="EngcolorAccent">#c8e8ff</color>-->
+    <color name="colorAccent">#19c56a</color>
 </resources>
