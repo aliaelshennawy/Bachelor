@@ -26,6 +26,10 @@ class ProblemsController < ApplicationController
       @not=Notification.new(:cause_id => @problem.user_id,:title => "Problem posted", :text =>"لديك سؤال جديد")
      reg_ids=User.where(:status => "engineer")
         @not.save!
+        @y=Engineerlist.new
+         @y.title="لديك سؤال جديد"
+         @y.icon=2
+         @y.save
      for reg_id in reg_ids
      Notification.send_not(reg_id.registeration_id,@not.text,@not.title)
     end

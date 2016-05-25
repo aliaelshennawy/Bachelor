@@ -14,6 +14,10 @@ class AdvicesController < ApplicationController
   		advice=Advice.new(advice_params)
   		if advice.save
          @not=Notification.new(:title => "Advice posted", :text =>"لديك نصيحة جديدة")
+         @x = Farmerlist.new
+         @x.title="لديك نصيحة جديدة"
+         @x.icon=0
+         @x.save
      reg_ids=User.where(:status => "farmer")
         @not.save!
      for reg_id in reg_ids
@@ -21,7 +25,7 @@ class AdvicesController < ApplicationController
     end
   			render json: {message:"done"},status:200
   		else
-  			render json:{"NOP"},status:422
+  			render json:{result: "NOP",message: "advice cannot be save"},status:422
   		end
   	end
   	private

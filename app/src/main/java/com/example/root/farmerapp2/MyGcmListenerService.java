@@ -42,31 +42,28 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, " " + message);
-//        SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sp.edit();
-//        editor.putString("notify_msg", message);
-//        editor.commit();
-        Notification notification_item = new Notification();
-        Notification notification_item_eng = new Notification();
-        if(message.equals("لديك نصيحة جديدة")) {
-            notification_item.setMessage(message);
-            notification_item.setNotifyIcon(R.drawable.ic_bell_black);
-            ThreeFragment.notify.add(notification_item);
-        }
-        else {
-            if (message.equals("لقد جاوب المهندس على سؤالك")) {
-                notification_item.setMessage(message);
-                notification_item.setNotifyIcon(R.drawable.ic_bell);
-                ThreeFragment.notify.add(notification_item);
-            } else {
-                notification_item.setMessage("ليس لديك اى نصائح او اسئلة");
-                notification_item.setNotifyIcon(R.drawable.ic_bell_white);
-            }
-        }
-        ThreeFragment.notify.clear();
-        ThreeFragment.notify.add(notification_item);
-//        ThreeFragment.adapter.notifyDataSetChanged();
 
+//        Notification notification_item = new Notification();
+//        Notification notification_item_eng = new Notification();
+//        if(message.equals("لديك نصيحة جديدة")) {
+//            notification_item.setMessage(message);
+//            notification_item.setNotifyIcon(R.drawable.ic_bell_black);
+//            ThreeFragment.notify.add(notification_item);
+//        }
+//        else {
+//            if (message.equals("لقد جاوب المهندس على سؤالك")) {
+//                notification_item.setMessage(message);
+//                notification_item.setNotifyIcon(R.drawable.ic_bell);
+//                ThreeFragment.notify.add(notification_item);
+//            } else {
+//                notification_item.setMessage("ليس لديك اى نصائح او اسئلة");
+//                notification_item.setNotifyIcon(R.drawable.ic_bell_white);
+//            }
+//        }
+//        ThreeFragment.notify.clear();
+//        ThreeFragment.notify.add(notification_item);
+//        ThreeFragment.adapter.notifyDataSetChanged();
+//
 
 
         // [START_EXCLUDE]
@@ -105,7 +102,7 @@ public class MyGcmListenerService extends GcmListenerService {
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_plant)
-                    .setContentTitle("GCM Message")
+                    .setContentTitle("Egypt Agri App")
                     .setContentText(message)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)

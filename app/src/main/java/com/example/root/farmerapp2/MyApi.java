@@ -52,6 +52,11 @@ void createReply(@Field("reply[photo]") String photo ,@Field("reply[audio]") Str
 @GET("/replies/{problem_id}")
 void getAllReplies(@Path("problem_id") int problem_id,Callback<List<models.Reply>> callback);
 @FormUrlEncoded
-@POST("/replyCreate")
+@POST("/adviceCreate")
 void postAdvice(@Field("advice[photo]") String photo,@Field("advice[audio]") String audio,Callback<Advice> callback);
+@GET("/farmerNotificationCreate")
+void getAllFarmerNotify(Callback<List<models.Farmerlist>> callback);
+@GET("/engineerNotificationCreate")
+void getAllEngineerNotify(Callback<List<models.Engineerlist>> callback);
+
 }

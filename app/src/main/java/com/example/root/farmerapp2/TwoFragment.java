@@ -104,7 +104,6 @@ public class TwoFragment extends Fragment {
 
             public void success(final List<Reply> replies, Response response) {
                 Log.d("Getting replies", "Success");
-                //Log.d("Photo of reply",replies.get(0).getPhoto().toString());
 
                 final ArrayList<Reply> arrayListReplies = new ArrayList<Reply>();
                 arrayListReplies.clear();

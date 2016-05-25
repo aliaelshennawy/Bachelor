@@ -22,6 +22,8 @@ get '/users' => 'users#index'
   get '/advices' => 'advices#index'
   get '/advice' => 'advices#show'
   post '/adviceCreate' => 'advices#create'
+  get '/farmerNotificationCreate'=>'farmerlists#index'
+  get '/engineerNotificationCreate'=>'engineerlists#index'
  # post '/problems' => 'problems#create'
   #post 
   post '/problems/:user_id' =>'problems#create'

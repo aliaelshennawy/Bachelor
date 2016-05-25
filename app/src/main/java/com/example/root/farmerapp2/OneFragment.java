@@ -85,7 +85,7 @@ public class OneFragment extends Fragment {
         final File newdir = new File(dir);
         faActivity = (FragmentActivity) super.getActivity();
         Rlayout = (RelativeLayout) inflater.inflate(R.layout.fragment_one, container, false);
-       final SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+        final SharedPreferences sp = this.getActivity().getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
         final int myIntValue = sp.getInt("farmer_id", -1);
         Log.d("UserID", "" + myIntValue);
 
@@ -160,7 +160,7 @@ public class OneFragment extends Fragment {
                         config.put("cloud_name", "dsm9tcfpq");
                         config.put("api_key", "433145311994214");
                         config.put("api_secret", "5KIGzPsxpp5t1m3Z-djFk3pZV-w");
-;
+                        ;
                         Cloudinary cloudinary = new Cloudinary(config);
                         Cloudinary cloudinary1 = new Cloudinary(config);
                         try {
@@ -295,4 +295,3 @@ public class OneFragment extends Fragment {
     }
 
 }
-

@@ -7,4 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listEngineer" />
+    <TextView
+        android:id="@+id/empty_list_eng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="لا يوجد لديك اسئلة جديدة"
+        android:visibility="gone"
+        android:layout_margin="100dp"
+        android:layout_marginTop="150dp" />
+
 </LinearLayout>

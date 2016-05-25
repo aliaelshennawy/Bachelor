@@ -51,12 +51,6 @@ public class LoginEngineer extends Activity {
                 {
 
                     public void success(User user, Response response) {
-//                        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(LoginEngineer.this);
-//                        SharedPreferences.Editor editor =prefs.edit();
-//                        editor.putInt("id",user.getId());
-//                        String regId = user.getRegisteration_id();
-//                        Log.d("regId",regId);
-//                        Log.d("Success Login","Success");
                         SharedPreferences sp = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sp.edit();
                       editor.putInt("engineer_id", user.getId());
