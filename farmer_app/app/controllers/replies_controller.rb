@@ -7,7 +7,7 @@ class RepliesController < ApplicationController
         	@not=Notification.new(:user_id => Problem.find(reply.problem_id).user_id,:title => "Reply posted", :text =>"لقد جاوب المهندس على سؤالك")
      		@not.save!
      	 @y=Farmerlist.new
-         @y.title="لديك نصيحة جديدة"
+         @y.title="لديك اجابة جديدة"
          @y.icon=1
          @y.save
         	reg_ids=User.find(@not.user_id).registeration_id

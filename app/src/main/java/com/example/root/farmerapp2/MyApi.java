@@ -27,7 +27,7 @@ import retrofit.mime.TypedFile;
 class AccessToken { @SerializedName("access_token") private String accessToken; }
 
 public interface MyApi {
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://192.168.1.109:3000/";
     @FormUrlEncoded
     @POST("/login")
     void Login(@Field("session[name]") String name , @Field("session[password]")String password, Callback<User> callback);
@@ -58,5 +58,6 @@ void postAdvice(@Field("advice[photo]") String photo,@Field("advice[audio]") Str
 void getAllFarmerNotify(Callback<List<models.Farmerlist>> callback);
 @GET("/engineerNotificationCreate")
 void getAllEngineerNotify(Callback<List<models.Engineerlist>> callback);
-
+@GET("/advices")
+void getAllAdvices(Callback<List<models.Advice>> callback);
 }

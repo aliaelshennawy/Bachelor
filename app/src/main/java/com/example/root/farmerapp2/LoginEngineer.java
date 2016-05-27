@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +22,7 @@ import retrofit.client.Response;
  */
 public class LoginEngineer extends Activity {
 
-    EditText phone;
+    EditText phoneEng;
     EditText name;
 //    String reg_id;
 
@@ -32,7 +32,8 @@ public class LoginEngineer extends Activity {
 
 
         name = (EditText) findViewById(R.id.editNameEng);;
-      phone = (EditText) findViewById(R.id.editPhoneEng);
+      phoneEng = (EditText) findViewById(R.id.editPhoneEng);
+        phoneEng.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 ;
     Button loginB = (Button) findViewById(R.id.submit_loginEng);
         loginB.setOnClickListener(new View.OnClickListener() {
@@ -40,11 +41,12 @@ public class LoginEngineer extends Activity {
             public void onClick(View v) {
 
                 String getname=  name.getText().toString();
-                String getphone= phone.getText().toString();
+                String getphone= phoneEng.getText().toString();
 
 
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint((MyApi.BASE_URL)).build();
                 MyApi api = adapter.create(MyApi.class);
                 api.Login(getname, getphone, new Callback<User>()
 

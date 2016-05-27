@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -28,6 +29,7 @@ import retrofit.client.Response;
  * Created by root on 26/03/16.
  */
 public class SignUp extends Activity{
+    EditText phoneSignup2;
 
 EditText phoneSignup;
 EditText nameSignup;
@@ -46,6 +48,9 @@ Boolean clicked;
 
         nameSignup = (EditText) findViewById(R.id.editNameSignup);
         phoneSignup = (EditText) findViewById(R.id.editPhoneSignup);
+        phoneSignup2 =(EditText) findViewById(R.id.resubmitPhone);
+        phoneSignup.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        phoneSignup2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         engineerImg =(ImageView) findViewById(R.id.engineerImg);
         farmerImg = (ImageView) findViewById(R.id.farmerImg);
         signupCommand=(ImageView) findViewById(R.id.playSignup);

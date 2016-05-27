@@ -54,20 +54,8 @@ import retrofit.client.Response;
  */
 public class OneEngFragment extends Fragment {
 
-    String getImage;
-    Cloudinary cloudinary;
-    ImageView iv;
-    ImageView audioPlay;
-    Bitmap btmap;
-    Button okay;
-    FrameLayout fLayout;
-    public LinearLayout lLayout;
-    URL dataSrcUrl;
-    int user_id;
     int itemPos;
-    ArrayList<Problem> problemList;
     ListView pListView; //Problems list view in engineer side
-    private FragmentActivity faActivity;
     public OneEngFragment() {
     }
 
@@ -82,7 +70,7 @@ public class OneEngFragment extends Fragment {
         Log.d("UserEngID", "" + myIntValue);
 
        // CustomQuestionsAdapter questionsAdapter = new CustomQuestionsAdapter(getActivity().getApplicationContext(),S)
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint((MyApi.BASE_URL)).build();
         MyApi api = adapter.create(MyApi.class);
      api.getAllProblems(new Callback<List<Problem>>() {
 

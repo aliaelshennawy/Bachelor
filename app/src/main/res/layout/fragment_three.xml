@@ -9,6 +9,13 @@
         android:longClickable="false"
         android:layout_weight="0.04"
         android:id="@+id/relativeLayout">
+        <TabWidget
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:background="#199657"
+            android:baselineAligned="false"
+            android:id="@android:id/tabs">
+        </TabWidget>
 
         <ImageView
             android:layout_width="wrap_content"

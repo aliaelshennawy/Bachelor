@@ -50,10 +50,10 @@ import retrofit.client.Response;
 
 public class OneFragment extends Fragment {
 
-    public static int count = 0;
+    private int count = 0;
     int TAKE_PHOTO_CODE = 0;
     File newfile;
-    int i = 0;
+    private int i = 0;
     Uri outputFileUri;
     Map uploadResult;
     File audioFile;
@@ -70,6 +70,7 @@ public class OneFragment extends Fragment {
     private String outPutImage = null;
     private Button Adkhel = null;
     int problem_id;
+    boolean recording =false;
     SeekBar seekBarFrag1;
     public OneFragment() {
 
@@ -174,7 +175,7 @@ public class OneFragment extends Fragment {
                             Log.d("UrlToString", audioUrl);
 
 
-                            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+                            RestAdapter adapter = new RestAdapter.Builder().setEndpoint((MyApi.BASE_URL)).build();
                             MyApi api = adapter.create(MyApi.class);
                             api.postProblem(resultUrl, "Problem", audioUrl, myIntValue, new Callback<Problem>()
 
@@ -235,12 +236,13 @@ public class OneFragment extends Fragment {
 
         imgRecord.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (i == 0) {
-
+                if (i == 0){
 
                     try {
                         myAudioRecorder.prepare();
                         myAudioRecorder.start();
+
+
                     } catch (IllegalStateException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -254,10 +256,10 @@ public class OneFragment extends Fragment {
                     i = 1;
                     // uploadAudio(selectedPath);
 
-                } else {
+                } else if(i==1){
 
                     myAudioRecorder.stop();
-                    //myAudioRecorder.reset();
+                   // myAudioRecorder.reset();
                     myAudioRecorder.release();
                     myAudioRecorder = null;
                     //  doAudioFileUpload(myFileName);
@@ -266,8 +268,7 @@ public class OneFragment extends Fragment {
 
 
                     Toast.makeText(getActivity().getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
-
-
+                i=0;
                 }
 
 
@@ -287,11 +288,10 @@ public class OneFragment extends Fragment {
             Log.d("CameraDemo", "Pic saved");
         }
     }
-
-
-    public ArrayList<Object> AddItemAndReturn(ArrayList<Object> array, Object o) {
-        array.add(o);
-        return array;
+    public void onPrepared(MediaPlayer player) {
+        player.start();
     }
+
+
 
 }

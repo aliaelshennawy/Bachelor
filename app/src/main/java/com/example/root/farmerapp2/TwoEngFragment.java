@@ -98,10 +98,10 @@ public class TwoEngFragment extends Fragment {
 
 
                     Toast.makeText(getActivity().getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-                    i = 1;
+                    i  ++;
                     // uploadAudio(selectedPath);
 
-                } else {
+                } else if(i==1){
 
                     myAudioRecorder.stop();
                     //myAudioRecorder.reset();
@@ -111,8 +111,8 @@ public class TwoEngFragment extends Fragment {
                     // audioUri = Uri.parse(outputFile);
                     // UploadFile(audioUri);
 
-
                     Toast.makeText(getActivity().getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+                    i=0;
                 }
                 final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
                 final File newdir = new File(dir);

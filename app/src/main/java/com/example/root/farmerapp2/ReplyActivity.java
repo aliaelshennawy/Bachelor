@@ -41,16 +41,16 @@ public class ReplyActivity extends AppCompatActivity {
     ImageView replyRecord;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
-    InputStream stream;
-    int TAKE_PHOTO_CODE = 0;
+    private InputStream stream;
+    private int TAKE_PHOTO_CODE = 0;
     Button submitReply;
     public static int count = 0;
-    int i = 0;
-    File newfile;
-    File audioFile;
-    Uri outputFileUri;
-    Map uploadResult;
-    Map uploadAudio;
+    private int i = 0;
+    private File newfile;
+    private File audioFile;
+    private Uri outputFileUri;
+    private Map uploadResult;
+    private Map uploadAudio;
 
     private String outPutImage = null;
     @Override
@@ -101,10 +101,10 @@ public class ReplyActivity extends AppCompatActivity {
 
 
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
-                    i = 1;
+                    i ++;
                     // uploadAudio(selectedPath);
 
-                } else {
+                } else if(i==1){
 
                     myAudioRecorder.stop();
                     //myAudioRecorder.reset();
@@ -116,6 +116,7 @@ public class ReplyActivity extends AppCompatActivity {
 
 
                     Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_LONG).show();
+                    i=0;
                 }
                 final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
                 final File newdir = new File(dir);

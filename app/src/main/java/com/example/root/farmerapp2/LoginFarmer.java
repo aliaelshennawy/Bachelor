@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -39,7 +40,7 @@ public class LoginFarmer extends Activity {
 
         name = (EditText) findViewById(R.id.editName);;
       phone = (EditText) findViewById(R.id.editPhone);
-
+        phone.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         //Adding sound to the command in Login Farmer
         playInfo = (ImageView) findViewById(R.id.playLogin);
 
@@ -66,9 +67,10 @@ public class LoginFarmer extends Activity {
 
                 String getname=  name.getText().toString();
                 String getphone= phone.getText().toString();
+                phone.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 
-                RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
+                RestAdapter adapter = new RestAdapter.Builder().setEndpoint((MyApi.BASE_URL)).build();
                 MyApi api = adapter.create(MyApi.class);
                 api.Login(getname, getphone, new Callback<User>()
 

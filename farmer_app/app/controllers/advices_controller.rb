@@ -4,7 +4,7 @@ class AdvicesController < ApplicationController
 
   	def index
   		advices=Advice.all 
-  		render json: advies , status:200
+  		render json: advices , status:200
   	end
   	def show 
   		advice=Advice.find(params[:id])

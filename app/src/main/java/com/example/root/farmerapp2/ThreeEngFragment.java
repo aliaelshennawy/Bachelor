@@ -1,6 +1,7 @@
 package com.example.root.farmerapp2;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,6 +21,7 @@ import java.util.List;
 import models.Engineerlist;
 import models.Farmerlist;
 import models.Notification;
+import models.Reply;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -29,7 +31,7 @@ import retrofit.client.Response;
  * Created by root on 24/04/16.
  */
 public class ThreeEngFragment extends Fragment {
-    public static  NotificationAdapter engineer_adapter;
+
     ListView engineer_list;
     TextView empty_engineer;
     public static ArrayList<Notification> eng_notify_list = new ArrayList<Notification>();
@@ -68,12 +70,9 @@ public class ThreeEngFragment extends Fragment {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if(arrayListNotifications.get(position).getIcon() == 0){
-                            arrayListNotifications.get(position).setIcon(R.drawable.ic_bell_black);
-                        }
-                        else{
-                            arrayListNotifications.get(position).setIcon(R.drawable.ic_bell);
-                        }
+                        Intent intent = new Intent(getActivity(), ReplyActivity.class);
+                        startActivity(intent);
+
 
 
                     }

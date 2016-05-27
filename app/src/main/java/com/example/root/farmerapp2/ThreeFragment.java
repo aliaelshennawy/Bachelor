@@ -6,8 +6,11 @@ package com.example.root.farmerapp2;
 
 
 import android.animation.ObjectAnimator;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -42,7 +45,7 @@ public class ThreeFragment extends Fragment{
     String content;
     public static ArrayList<Notification> notify = new ArrayList<Notification>();
     models.Notification notification_item = new Notification();
-    public static  NotificationAdapter adapter;
+
     ListView farmer_list;
 TextView empty_farmer ;
 
@@ -52,12 +55,6 @@ TextView empty_farmer ;
 
     ListView farmer_notify;
 
-    //
-    //@Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-//
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,28 +81,6 @@ TextView empty_farmer ;
             }
         });
 
-
-
-
-
-
-// adapter = new NotificationAdapter(getActivity(),notify);
-//        farmer_notify = (ListView) (rlLayout).findViewById(R.id.listNotify);
-//        farmer_notify.setAdapter(adapter);
-
-
-
-//        farmer_notify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                                    int position, long id) {
-//                // TODO Auto-generated method stub
-//               // String Slecteditem= itemname[+position];
-//
-//            }
-//        });
-
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(("http://192.168.1.109:3000/")).build();
         MyApi api = adapter.create(MyApi.class);
         api.getAllFarmerNotify(new Callback<List<Farmerlist>>() {
@@ -114,7 +89,6 @@ TextView empty_farmer ;
 
             public void success(final List<Farmerlist> farmer_notifications, Response response) {
                 Log.d("Getting Farmer Notifications", "Success");
-                //Log.d("Photo of reply",replies.get(0).getPhoto().toString());
 
                 final ArrayList<Farmerlist> arrayListNotifications = new ArrayList<>();
                 arrayListNotifications.clear();
@@ -136,11 +110,13 @@ TextView empty_farmer ;
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if(arrayListNotifications.get(position).getIcon() == 0){
-                            arrayListNotifications.get(position).setIcon(R.drawable.ic_bell_black);
+                        if(arrayListNotifications.get(position).getIcon()==0){
+                            Intent intent = new Intent(getActivity(), getAdvice.class);
+                            startActivity(intent);
                         }
-                        else{
-                            arrayListNotifications.get(position).setIcon(R.drawable.ic_bell);
+                        else {
+
+MainActivity.viewPager.setCurrentItem(1);
                         }
 
 
@@ -160,26 +136,6 @@ TextView empty_farmer ;
     }
 
 
-
-
-
-
-
-    // private String isCheckedOrNot(CheckBox checkbox) {
-//        if(checkbox.isChecked())
-//            return "is checked";
-//        else
-//            return "is not checked";
-//    }
-    //ADDED TO TRIAL
-
-//
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.activity_main);
-//
-//
-//        }
 
 }
 

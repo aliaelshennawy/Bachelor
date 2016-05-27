@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isReceiverRegistered;
 
     private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public static TabLayout tabLayout;
+    public static ViewPager viewPager;
     private int[] tabIcons = {
             R.drawable.selector_ask,
             R.drawable.selector_chat,
